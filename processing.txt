@@ -1,0 +1,192 @@
+import processing.serial.*;
+
+
+Serial port;
+String string;
+
+
+int ancho=100,alto=50,radio=15;
+
+
+int BotonWy=530,BotonWx=170;
+int BotonAy=600,BotonAx=50;
+int BotonSy=600,BotonSx=170;
+int BotonDy=600,BotonDx=290;
+
+
+String estatus=" ";
+String distancia=" ";
+
+
+PImage img;
+
+
+   void setup() {
+  size(1080, 720);
+  background(244, 246, 246);
+  img = loadImage("ELECTRONICA.png");
+  
+  textSize(60);
+  fill (0, 0, 0);
+  text("Movilidad", 90, 100);
+  
+  textSize(60);
+  fill (0, 0, 0);
+  text("Distancia", 750, 100);
+  
+  fill (200, 200, 200);
+  rect(BotonWx, BotonWy, ancho, alto,radio);
+  rect(BotonAx, BotonAy, ancho, alto,radio);
+  rect(BotonSx, BotonSy, ancho, alto,radio);
+  rect(BotonDx, BotonDy, ancho, alto,radio);  
+   
+  textSize(60);
+  fill (255, 255, 255);
+  text("W", 195, 575);
+  text("A", 85, 645);
+  text("S", 205, 645);
+  text("D", 320, 645);  
+  
+  image(img, 700, 400,width/3, height/3);
+  
+}
+
+
+void draw() { 
+  
+  textSize(40);
+  fill (0, 0, 0);
+  text("Estatus Robot", 100, 250);
+  fill (200, 200, 200);
+  
+  rect(75, 300, 300, alto,radio);
+  textSize(40);
+  fill (255, 255, 255);
+  text(estatus, 100, 337);
+  
+  textSize(40);
+  fill (0, 0, 0);
+  text("Distancia a objeto", 720, 250);
+  fill (200, 200, 200);
+  
+  rect(725, 300, 300, alto,radio);
+  textSize(40);
+  fill (255, 255, 255);
+  text(distancia, 740, 337);
+  
+  distancia=port.readStringUntil('\n');;
+}
+
+
+void keyPressed(){
+ if(key=='w'){ 
+ //port.write('w');
+ estatus="Adelante";
+ fill (255, 255, 255);
+ rect(BotonWx, BotonWy, ancho, alto,radio);
+ 
+ textSize(60);
+ fill (200, 200, 200);
+ text("W", 195, 575);
+ 
+ fill (200, 200, 200);
+ rect(BotonAx, BotonAy, ancho, alto,radio);
+ rect(BotonSx, BotonSy, ancho, alto,radio);
+ rect(BotonDx, BotonDy, ancho, alto,radio);  
+ 
+ textSize(60);
+ fill (255, 255, 255);
+ text("A", 85, 645);
+ text("S", 205, 645);
+ text("D", 320, 645);  
+  
+ }
+ 
+ else if(key=='a'){ 
+ //port.write('a');
+ estatus="Izquierda";
+ fill (255, 255, 255);
+ rect(BotonAx, BotonAy, ancho, alto,radio);
+ 
+ textSize(60);
+ fill (200, 200, 200);
+ text("A", 85, 645);
+ 
+ fill (200, 200, 200);
+ rect(BotonWx, BotonWy, ancho, alto,radio);
+ rect(BotonSx, BotonSy, ancho, alto,radio);
+ rect(BotonDx, BotonDy, ancho, alto,radio);  
+ 
+ textSize(60);
+ fill (255, 255, 255);
+ text("W", 195, 575);
+ text("S", 205, 645);
+ text("D", 320, 645);  
+ }
+ 
+ else if(key=='s'){ 
+ estatus="Atras";
+ fill (255, 255, 255);
+ rect(BotonSx, BotonSy, ancho, alto,radio);
+ 
+ textSize(60);
+ fill (200, 200, 200);
+ text("S", 205, 645);
+ 
+ fill (200, 200, 200);
+ rect(BotonWx, BotonWy, ancho, alto,radio);
+ rect(BotonAx, BotonAy, ancho, alto,radio);
+ rect(BotonDx, BotonDy, ancho, alto,radio);  
+ 
+ textSize(60);
+ fill (255, 255, 255);
+ text("W", 195, 575);
+ text("A", 85, 645);
+ text("D", 320, 645);  
+ }
+ 
+ else if(key=='d'){ 
+ //port.write('d');
+ estatus="Derecha";
+ fill (255, 255, 255);
+ rect(BotonDx, BotonDy, ancho, alto,radio);  
+ 
+ textSize(60);
+ fill (200, 200, 200);
+ text("D", 320, 645);
+ 
+ fill (200, 200, 200);
+ rect(BotonWx, BotonWy, ancho, alto,radio);
+ rect(BotonAx, BotonAy, ancho, alto,radio);
+ rect(BotonSx, BotonSy, ancho, alto,radio);
+ 
+ textSize(60);
+ fill (255, 255, 255);
+ text("W", 195, 575);
+ text("A", 85, 645);
+ text("S", 205, 645);  
+ }
+ 
+ else if(key=='q'){ 
+ //port.write('q');
+ estatus="Alto";
+ 
+ fill (200, 200, 200);
+ rect(BotonWx, BotonWy, ancho, alto,radio);
+ rect(BotonAx, BotonAy, ancho, alto,radio);
+ rect(BotonSx, BotonSy, ancho, alto,radio);
+ rect(BotonDx, BotonDy, ancho, alto,radio);  
+ 
+ textSize(60);
+ fill (255, 255, 255);
+ text("W", 195, 575);
+ text("A", 85, 645);
+ text("S", 205, 645);
+ text("D", 320, 645);  
+ }
+}
+
+
+void serialEvent(serial port){
+   disancia=port.readStringUntil(‘\n’);
+}
